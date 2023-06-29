@@ -16,7 +16,7 @@ namespace CarRentalBusiness.Controllers
             this.carService = carService;
         }
 
-        [HttpPost("/addCar")]
+        [HttpPost("/add")]
         public IActionResult Add(CarAddDto payload)
         {
             var result = carService.AddCar(payload);
@@ -27,7 +27,7 @@ namespace CarRentalBusiness.Controllers
             return Ok(result);
         }
 
-        [HttpGet("/get-all-cars")]
+        [HttpGet("/get-all")]
         public ActionResult<List<Car>> GetAll()
         {
             var results = carService.GetAll();
@@ -35,11 +35,11 @@ namespace CarRentalBusiness.Controllers
             return Ok(results);
         }
 
-        [HttpDelete("/delete/{carId}")]
+        [HttpDelete("delete/{carId}")]
         public ActionResult<Car> Delete([FromRoute] int carId) {
             var result = carService.Delete(carId);
 
-            if (result == null)
+            if (result == false)
             {
                 return BadRequest("Car could not be deleted");
             }
@@ -47,14 +47,27 @@ namespace CarRentalBusiness.Controllers
             return Ok(result);
         }
 
-        [HttpPatch("edit-car")]
-        public ActionResult<bool> GetById([FromBody] CarUpdateDto carUpdateDto)
+        [HttpPatch("edit-horsePower")]
+        public ActionResult<bool> EditHp([FromBody] CarUpdateHPDto carUpdateDto)
         {
-            var result = carService.Edit(carUpdateDto);
+            var result = carService.EditHP(carUpdateDto);
 
             if (!result)
             {
-                return BadRequest("Car could not be updated.");
+                return BadRequest("Car HP could not be updated.");
+            }
+
+            return result;
+        }
+
+        [HttpPatch("edit-price")]
+        public ActionResult<bool> EditPrice([FromBody] CarUpdatePrice carUpdatePrice)
+        {
+            var result = carService.EditPrice(carUpdatePrice);
+
+            if (!result)
+            {
+                return BadRequest("Car price could not be updated.");
             }
 
             return result;

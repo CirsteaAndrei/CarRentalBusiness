@@ -68,7 +68,7 @@ namespace Core.Services
             return true;
         }
 
-        public bool Edit(CarUpdateDto payload)
+        public bool EditHP(CarUpdateHPDto payload)
         {
             if (payload == null)
             {
@@ -78,14 +78,20 @@ namespace Core.Services
             var result = unitOfWork.Cars.GetById(payload.Id);
             if (result == null) return false;
 
-            if (payload.HorsePower != null)
+            if (payload.HorsePower > 0)
             {
                 result.HorsePower = payload.HorsePower;
             }
-            if(payload.Interest != null)
-            {
-                result.Interest = payload.Interest;
-            }
+            unitOfWork.SaveChanges();
+            return true;
+        }
+
+        public bool EditPrice(CarUpdatePrice payload)
+        {
+            var car = unitOfWork.Cars.GetById(payload.Id);
+            if (car == null) return false;
+            if(payload.Price == 0) return false;
+            car.Price = payload.Price;
             unitOfWork.SaveChanges();
             return true;
         }

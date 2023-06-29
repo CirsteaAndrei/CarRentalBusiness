@@ -22,12 +22,14 @@ namespace CarRentalBusiness.Settings
         {
             services.AddScoped<CarService>();
             services.AddScoped<CategoryService>();
+            services.AddScoped<RentingContractService>();
         }
 
         private static void AddRepositories(IServiceCollection services)
         {
             services.AddScoped<CarsRepository>();
             services.AddScoped<CategoriesRepository>();
+            services.AddScoped<RentingContractsRepository>();
             services.AddScoped<UnitOfWork>();
         }
 

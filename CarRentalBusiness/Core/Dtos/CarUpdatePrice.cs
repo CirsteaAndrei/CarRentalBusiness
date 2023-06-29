@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Core.Dtos
 {
-    public class CarUpdateDto
+    public class CarUpdatePrice
     {
         public int Id { get; set; }
-        public int HorsePower { get; set; }
-        public int Interest { get; set; }
+        public float Price { get; set; }
     }
 }

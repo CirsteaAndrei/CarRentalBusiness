@@ -11,6 +11,8 @@ namespace DataLayer
     {
         public CarsRepository Cars { get; }
         public CategoriesRepository Categories { get; }
+
+        public RentingContractsRepository RentingContracts { get; }
         //public ClassRepository Classes { get; }
 
         //public GradesRepository Grades { get; }
@@ -21,12 +23,15 @@ namespace DataLayer
         (
             AppDbContext dbContext,
             CarsRepository carsRepository,
-            CategoriesRepository categoriesRepository
+            CategoriesRepository categoriesRepository,
+            RentingContractsRepository rentingContracts
         )
         {
             _dbContext = dbContext;
             Cars = carsRepository;
             Categories = categoriesRepository;
+            RentingContracts = rentingContracts;
+            
         }
 
         public void SaveChanges()

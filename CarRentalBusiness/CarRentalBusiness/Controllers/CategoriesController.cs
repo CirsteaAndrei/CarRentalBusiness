@@ -17,7 +17,7 @@ namespace CarRentalBusiness.Controllers
             this.categoryService = categoryService;
         }
 
-        [HttpPost("/addCategory")]
+        [HttpPost("add")]
         public IActionResult Add(CategoryAddDto payload)
         {
             var result = categoryService.Add(payload);
@@ -28,7 +28,7 @@ namespace CarRentalBusiness.Controllers
             return Ok(result);
         }
 
-        [HttpGet("/get-all-categories")]
+        [HttpGet("get-all")]
         public ActionResult<List<Category>> GetAll()
         {
             var results = categoryService.GetAll();
@@ -41,7 +41,7 @@ namespace CarRentalBusiness.Controllers
         {
             var result = categoryService.Delete(categoryId);
 
-            if (result == null)
+            if (result == false)
             {
                 return BadRequest("Category could not be deleted");
             }
