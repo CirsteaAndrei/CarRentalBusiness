@@ -19,9 +19,7 @@ namespace DataLayer.Mapping
             result.Id = car.Id;
             result.Manifacturer_Model = car.Manifacturer +" "+car.Model;
             result.Interest = car.Interest;
-            result.CategoryId = car.Category.Id;
-            result.CategoryName = car.Category.Name;
-            result.Contracts = car.Contracts.ToRentingContractDtos();
+            result.CategoryId = car.CategoryId;
 
             return result;
         }

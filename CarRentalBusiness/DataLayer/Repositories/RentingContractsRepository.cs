@@ -38,7 +38,7 @@ namespace DataLayer.Repositories
         public List<RentingContract> GetContractsByCarId(int carId)
         {
             var contracts = dbContext.RentingContracts
-                .Include(e => e.CarId == carId)
+                .Where(e => e.CarId == carId)
                 .OrderBy(contract => contract.DateStart)
                 .ToList();
 
@@ -47,10 +47,12 @@ namespace DataLayer.Repositories
         public List<RentingContract> GetOverlappingContracts(int carId, DateTime dateStart, DateTime dateEnd)
         {
             var overlappingContracts = dbContext.RentingContracts
-        .Include(contract =>
+        .Where(contract =>
             contract.CarId == carId &&
             !(contract.DateEnd < dateStart || contract.DateStart > dateEnd))
+        .OrderBy(contract => contract.DateStart)
         .ToList();
+
             return overlappingContracts;
         }
     }

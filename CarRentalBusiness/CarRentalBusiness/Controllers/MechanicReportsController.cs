@@ -63,5 +63,18 @@ namespace CarRentalBusiness.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("get-all-byCar/{carId}")]
+        public ActionResult<List<MechanicReportDto>> GetAllByCar([FromRoute] int carId)
+        {
+            var result = reportService.GetReportsByCar(carId);
+
+            if (result == null)
+            {
+                return BadRequest("Mechanic reports not fount");
+            }
+
+            return Ok(result);
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace CarRentalBusiness.Controllers
         }
 
         [HttpGet("/get/{carId}")]
-        public ActionResult<CarDto> GetById([FromRoute]int carId)
+        public ActionResult<Car> GetById([FromRoute]int carId)
         {
             var result = carService.GetById(carId);
 

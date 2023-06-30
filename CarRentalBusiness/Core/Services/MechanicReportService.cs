@@ -64,5 +64,13 @@ namespace Core.Services
             unitOfWork.SaveChanges();
             return true;
         }
+
+        public List<MechanicReportDto> GetReportsByCar(int carId)
+        {
+            var reports = unitOfWork.MechanicReports.GetReportsByCarId(carId);
+
+            var results = reports.ToMechanicReportDtos();
+            return results;
+        }
     }
 }

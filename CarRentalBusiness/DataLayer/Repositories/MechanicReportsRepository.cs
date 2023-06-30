@@ -19,9 +19,9 @@ namespace DataLayer.Repositories
         public List<MechanicReport> GetReportsByCarId(int carId)
         {
             var results = dbContext.MechanicReports
-                .Include(e => e.CarId == carId)
+                .Where(e => e.CarId == carId)
 
-                .OrderBy(e => e.CarId)
+                .OrderBy(e => e.DateCreated)
 
                 .ToList();
 

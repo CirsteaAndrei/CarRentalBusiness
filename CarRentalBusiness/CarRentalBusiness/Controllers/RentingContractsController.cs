@@ -76,5 +76,18 @@ namespace CarRentalBusiness.Controllers
 
             return Ok("Contract updated successfully.");
         }
+
+        [HttpGet("get-all-byCar/{carId}")]
+        public ActionResult<List<MechanicReportDto>> GetAllByCar([FromRoute] int carId)
+        {
+            var result = contractService.GetContractsByCar(carId);
+
+            if (result == null)
+            {
+                return BadRequest("Renting contracts not fount");
+            }
+
+            return Ok(result);
+        }
     }
 }

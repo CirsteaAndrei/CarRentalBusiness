@@ -48,6 +48,8 @@ namespace Core.Services
                 Car = car
             };
 
+            car.Interest++;
+
             unitOfWork.RentingContracts.Insert(contract);
             unitOfWork.SaveChanges();
 
@@ -97,6 +99,13 @@ namespace Core.Services
             unitOfWork.RentingContracts.Remove(rentingContract);
             unitOfWork.SaveChanges();
             return true;
+        }
+
+        public List<RentingContractDto> GetContractsByCar(int carId)
+        {
+            var contracts = unitOfWork.RentingContracts.GetContractsByCarId(carId);
+            var results = contracts.ToRentingContractDtos();
+            return results;
         }
 
     }
