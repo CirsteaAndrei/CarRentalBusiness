@@ -15,6 +15,6 @@ namespace DataLayer.Dtos
         public int Interest { get; set; }
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public List<ContractDto> Contracts { get; set; }
+        public List<RentingContractDto> Contracts { get; set; }
     }
 }

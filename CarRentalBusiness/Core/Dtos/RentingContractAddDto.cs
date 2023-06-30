@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Core.Dtos
 {
-    public class ContractDto
+    public class RentingContractAddDto
     {
         public string DateStart { get; set; }
+        public string DateEnd { get; set; }
         public int DaysDuration { get; set; }
     }
 }

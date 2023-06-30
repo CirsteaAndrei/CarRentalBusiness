@@ -1,4 +1,5 @@
-﻿using DataLayer.Repositories;
+﻿using DataLayer.Entities;
+using DataLayer.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,8 @@ namespace DataLayer
         public CategoriesRepository Categories { get; }
 
         public RentingContractsRepository RentingContracts { get; }
-        //public ClassRepository Classes { get; }
 
-        //public GradesRepository Grades { get; }
+        public MechanicReportsRepository MechanicReports { get; }
 
         private readonly AppDbContext _dbContext;
 
@@ -24,13 +24,16 @@ namespace DataLayer
             AppDbContext dbContext,
             CarsRepository carsRepository,
             CategoriesRepository categoriesRepository,
-            RentingContractsRepository rentingContracts
+            RentingContractsRepository rentingContracts,
+            MechanicReportsRepository mechanicReports
+            
         )
         {
             _dbContext = dbContext;
             Cars = carsRepository;
             Categories = categoriesRepository;
             RentingContracts = rentingContracts;
+            MechanicReports = mechanicReports;
             
         }
 

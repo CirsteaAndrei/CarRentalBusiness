@@ -23,6 +23,7 @@ namespace CarRentalBusiness.Settings
             services.AddScoped<CarService>();
             services.AddScoped<CategoryService>();
             services.AddScoped<RentingContractService>();
+            services.AddScoped<MechanicReportService>();
         }
 
         private static void AddRepositories(IServiceCollection services)
@@ -30,6 +31,7 @@ namespace CarRentalBusiness.Settings
             services.AddScoped<CarsRepository>();
             services.AddScoped<CategoriesRepository>();
             services.AddScoped<RentingContractsRepository>();
+            services.AddScoped<MechanicReportsRepository>();
             services.AddScoped<UnitOfWork>();
         }
 

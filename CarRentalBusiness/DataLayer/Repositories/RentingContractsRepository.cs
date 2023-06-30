@@ -1,4 +1,5 @@
 ﻿using DataLayer.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,44 @@ namespace DataLayer.Repositories
         public RentingContractsRepository(AppDbContext dbContext) : base(dbContext)
         {
             this.dbContext = dbContext;
+        }
+
+        public RentingContract GetByIdWithCar(int contractId)
+        {
+            var result = dbContext.RentingContracts
+               .Select(e => new RentingContract
+               {
+                   Id = e.Id,
+                   DateStart = e.DateStart,
+                   DateEnd = e.DateEnd,
+                   DaysDuration = e.DaysDuration,
+                   Profit = e.Profit,
+                   CarId = e.CarId,
+                   Car = dbContext.Cars.Include(car => car.Id == e.CarId).FirstOrDefault(),
+
+               })
+               .FirstOrDefault(e => e.Id == contractId);
+
+            return result;
+        }
+
+        public List<RentingContract> GetContractsByCarId(int carId)
+        {
+            var contracts = dbContext.RentingContracts
+                .Include(e => e.CarId == carId)
+                .OrderBy(contract => contract.DateStart)
+                .ToList();
+
+            return contracts;
+        }
+        public List<RentingContract> GetOverlappingContracts(int carId, DateTime dateStart, DateTime dateEnd)
+        {
+            var overlappingContracts = dbContext.RentingContracts
+        .Include(contract =>
+            contract.CarId == carId &&
+            !(contract.DateEnd < dateStart || contract.DateStart > dateEnd))
+        .ToList();
+            return overlappingContracts;
         }
     }
 }

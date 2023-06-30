@@ -1,4 +1,5 @@
 ﻿using DataLayer.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace DataLayer.Repositories
             this.dbContext = dbContext;
         }
 
-        public Car GetByIdWithContracts(int carId)
+        public Car GetByIdWithContractsAndReports(int carId)
         {
             var result = dbContext.Cars
                .Select(e => new Car
@@ -23,7 +24,14 @@ namespace DataLayer.Repositories
                    Manifacturer = e.Manifacturer,
                    Model = e.Model,
                    Id = e.Id,
-                   Contracts = e.Contracts.ToList()
+                   Contracts = dbContext.RentingContracts.Include(contract =>
+                    contract.CarId == carId)
+                   .OrderBy(contract => contract.DateStart)
+                   .ToList(),
+                    Reports = dbContext.MechanicReports.Include(report =>
+                    report.CarId == carId)
+                   .OrderBy(report => report.DateCreated)
+                   .ToList(),
                })
                .FirstOrDefault(e => e.Id == carId);
 

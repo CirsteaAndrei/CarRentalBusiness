@@ -20,6 +20,7 @@ namespace DataLayer.Entities
         public Transmission Transmission { get; set; }
         public FuelType FuelType { get; set; }
         public List<RentingContract> Contracts { get; set; }
+        public List<MechanicReport> Reports { get; set; }
         public float Price { get; set; }
     }
 }

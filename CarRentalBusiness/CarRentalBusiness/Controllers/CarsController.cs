@@ -1,5 +1,6 @@
 ﻿using Core.Dtos;
 using Core.Services;
+using DataLayer.Dtos;
 using DataLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,6 +34,19 @@ namespace CarRentalBusiness.Controllers
             var results = carService.GetAll();
 
             return Ok(results);
+        }
+
+        [HttpGet("/get/{carId}")]
+        public ActionResult<CarDto> GetById([FromRoute]int carId)
+        {
+            var result = carService.GetById(carId);
+
+            if (result == null)
+            {
+                return BadRequest("Car not fount");
+            }
+
+            return Ok(result);
         }
 
         [HttpDelete("delete/{carId}")]

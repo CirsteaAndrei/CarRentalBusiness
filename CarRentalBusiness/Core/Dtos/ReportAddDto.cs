@@ -8,6 +8,7 @@ namespace Core.Dtos
 {
     public class ReportAddDto
     {
+        public int CarId { get; set; }
         public bool IsWorking { get; set; }
         public int ConditionScore { get; set; }
         public string DamagedParts { get; set; }

@@ -9,6 +9,7 @@ namespace DataLayer.Entities
     public class RentingContract : BaseEntity
     {
         public DateTime DateStart { get; set; }
+        public DateTime DateEnd { get; set; }
         public int DaysDuration { get; set; }
         public float Profit { get; set; }
         public int CarId { get; set; }

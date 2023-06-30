@@ -1,5 +1,6 @@
 ﻿using Core.Dtos;
 using Core.Services;
+using DataLayer.Dtos;
 using DataLayer.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -19,7 +20,7 @@ namespace CarRentalBusiness.Controllers
         }
 
         [HttpPost("add-to-car/{carId}")]
-        public IActionResult AddToCar([FromRoute] int carId, [FromBody] ContractDto contractDto)
+        public ActionResult<bool> AddToCar([FromRoute] int carId, [FromBody] Core.Dtos.RentingContractAddDto contractDto)
         {
             var result = contractService.AddContractToCar(carId, contractDto);
             if (!result)
@@ -28,6 +29,27 @@ namespace CarRentalBusiness.Controllers
             }
 
             return Ok("Contract added successfully.");
+        }
+
+        [HttpGet("get-all")]
+        public ActionResult<List<DataLayer.Dtos.RentingContractDto>> GetAll()
+        {
+            var results = contractService.GetAll();
+
+            return Ok(results);
+        }
+
+        [HttpGet("get/{contractId}")]
+        public ActionResult<Core.Dtos.RentingContractAddDto> GetById([FromRoute] int contractId)
+        {
+            var result = contractService.GetById(contractId);
+
+            if (result == null)
+            {
+                return BadRequest("Mechanic report not fount");
+            }
+
+            return Ok(result);
         }
 
         [HttpDelete("delete/{rentingContractId}")]
@@ -41,6 +63,18 @@ namespace CarRentalBusiness.Controllers
             }
 
             return Ok(result);
+        }
+
+        [HttpPatch("update/{contractId}")]
+        public ActionResult<bool> UpdateContract([FromRoute] int contractId, [FromBody] Core.Dtos.RentingContractAddDto contractDto)
+        {
+            var result = contractService.UpdateContract(contractId, contractDto);
+            if (!result)
+            {
+                return BadRequest("Failed to update the contract.");
+            }
+
+            return Ok("Contract updated successfully.");
         }
     }
 }

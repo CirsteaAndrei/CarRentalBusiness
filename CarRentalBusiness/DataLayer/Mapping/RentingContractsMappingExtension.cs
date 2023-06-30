@@ -11,7 +11,7 @@ namespace DataLayer.Mapping
 {
     public static class RentingContractsMappingExtension
     {
-        public static List<ContractDto> ToRentingContractDtos(this List<RentingContract> rentingContracts)
+        public static List<RentingContractDto> ToRentingContractDtos(this List<RentingContract> rentingContracts)
         {
             if (rentingContracts == null)
             {
@@ -23,13 +23,15 @@ namespace DataLayer.Mapping
             return results;
         }
 
-        public static ContractDto ToRentingContractDto(this RentingContract rentingContract)
+        public static RentingContractDto ToRentingContractDto(this RentingContract rentingContract)
         {
             if (rentingContract == null) return null;
 
-            var result = new ContractDto();
+            var result = new RentingContractDto();
+            result.Id = rentingContract.Id;
             result.Profit = rentingContract.Profit;
             result.DateStart = rentingContract.DateStart.ToString();
+            result.DateEnd = rentingContract.DateEnd.ToString();
             result.DaysDuration = rentingContract.DaysDuration;
 
             return result;

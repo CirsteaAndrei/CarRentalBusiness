@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Dtos;
 using DataLayer;
+using DataLayer.Dtos;
 using DataLayer.Entities;
+using DataLayer.Mapping;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Core.Services
@@ -51,17 +53,33 @@ namespace Core.Services
 
             return payload;
         }
-        public List<Car> GetAll()
+        public List<CarDto> GetAll()
         {
-            var results = unitOfWork.Cars.GetAll();
+            var results = unitOfWork.Cars.GetAll().ToCarDtos();
 
             return results;
+        }
+
+        public CarDto GetById(int carId)
+        {
+            var car = unitOfWork.Cars.GetById(carId);
+
+            var result = car.ToCarDto();
+
+            return result;
         }
 
         public bool Delete(int carId)
         {
             var car = unitOfWork.Cars.GetById(carId);
             if (car == null) return false;
+
+            //delete cascade
+            var associatedReports = unitOfWork.MechanicReports.GetReportsByCarId(carId);
+            foreach (var report in associatedReports)
+            {
+                unitOfWork.MechanicReports.Remove(report);
+            }
 
             unitOfWork.Cars.Remove(car);
             unitOfWork.SaveChanges();

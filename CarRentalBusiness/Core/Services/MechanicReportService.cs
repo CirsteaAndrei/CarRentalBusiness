@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataLayer.Dtos;
+using DataLayer.Mapping;
 
 namespace Core.Services
 {
@@ -19,9 +21,11 @@ namespace Core.Services
         public ReportAddDto AddMechanicReport(ReportAddDto payload)
         {
             if (payload == null) return null;
-            if (unitOfWork.Cars.GetById(payload.CarId) == null) return null;
 
-            var newCar = new MechanicReport
+            var car = unitOfWork.Cars.GetById(payload.CarId);
+            if (car == null) return null;
+
+            var newReport = new MechanicReport
             {
                 CarId = payload.CarId,
                 IsWorking = payload.IsWorking,
@@ -30,8 +34,35 @@ namespace Core.Services
                 EstRepairingCost = payload.EstRepairingCost,
                 DateCreated = DateTime.Parse(payload.DateCreated),
             };
+
+            unitOfWork.MechanicReports.Insert(newReport);
+            unitOfWork.SaveChanges();
             return payload;
         }
+        public List<MechanicReportDto> GetAll()
+        {
+            var results = unitOfWork.MechanicReports.GetAll().ToMechanicReportDtos();
 
+            return results;
+        }
+
+        public MechanicReportDto GetById(int reportId)
+        {
+            var mechanicReport = unitOfWork.MechanicReports.GetById(reportId);
+
+            var result = mechanicReport.ToMechanicReportDto();
+
+            return result;
+        }
+
+        public bool Delete(int MechanicReportId)
+        {
+            var mechanicReport = unitOfWork.MechanicReports.GetById(MechanicReportId);
+            if (mechanicReport == null) return false;
+
+            unitOfWork.MechanicReports.Remove(mechanicReport);
+            unitOfWork.SaveChanges();
+            return true;
+        }
     }
 }

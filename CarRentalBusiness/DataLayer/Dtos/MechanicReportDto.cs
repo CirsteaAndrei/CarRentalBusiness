@@ -10,6 +10,7 @@ namespace DataLayer.Dtos
     public class MechanicReportDto
     {
         public int Id { get; set; }
+        public int CarId { get; set; }
         public bool IsWorking { get; set; }
         public int ConditionScore { get; set; }
         public string DamagedParts { get; set; }
